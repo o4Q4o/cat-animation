@@ -23,54 +23,8 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include "peripheral_status.h"
 
-LV_IMG_DECLARE(mario1standing);
-LV_IMG_DECLARE(mario2run1);
-LV_IMG_DECLARE(mario2run2);
-LV_IMG_DECLARE(mario2run3);
-LV_IMG_DECLARE(mario3jump1);
-LV_IMG_DECLARE(mario3jump2);
-LV_IMG_DECLARE(mario3jump3);
-LV_IMG_DECLARE(mario3jump4);
-LV_IMG_DECLARE(mario3jump5);
-LV_IMG_DECLARE(mario3jump6);
-LV_IMG_DECLARE(mario3jump7);
-LV_IMG_DECLARE(mario3jump8);
-LV_IMG_DECLARE(mario3jump9);
-LV_IMG_DECLARE(mario3jump10);
-LV_IMG_DECLARE(mario3jump11);
-LV_IMG_DECLARE(mario3jump12);
-LV_IMG_DECLARE(mario3jump13);
-
-const lv_img_dsc_t *anim_imgs[] = {
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario1standing,&mario1standing,&mario1standing,&mario1standing,&mario1standing,
-    &mario2run1,&mario2run2,&mario2run3,
-    &mario2run1,&mario2run2,&mario2run3,
-    &mario2run1,&mario2run2,&mario2run3,
-    &mario2run1,&mario2run2,&mario2run3,
-    &mario2run1,&mario2run2,&mario2run3,
-    &mario3jump1,
-    &mario3jump2,
-    &mario3jump3,
-    &mario3jump4,
-    &mario3jump5,
-    &mario3jump6,
-    &mario3jump7,
-    &mario3jump8,
-    &mario3jump9,
-    &mario3jump10,
-    &mario3jump11,
-    &mario3jump12,
-    &mario3jump13,
-};
+LV_IMG_DECLARE(balloon);
+LV_IMG_DECLARE(mountain);
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -160,19 +114,11 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
     lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
 
-    //lv_obj_t *art = lv_img_create(widget->obj);
-    //bool random = sys_rand32_get() & 1;
-    //lv_img_set_src(art, random ? &balloon : &mountain);
-    //lv_img_set_src(art, &corro01);
-
-    lv_obj_t * art = lv_animimg_create(widget->obj);            //<--
-    lv_obj_center(art);                                         //<--
-    lv_animimg_set_src(art, (const void **) anim_imgs, 78);     //<--
-    lv_animimg_set_duration(art, 7800);                         //<--
-    lv_animimg_set_repeat_count(art, LV_ANIM_REPEAT_INFINITE);  //<--
-    lv_animimg_start(art);                                      //<--
-
+    lv_obj_t *art = lv_img_create(widget->obj);
+    bool random = sys_rand32_get() & 1;
+    lv_img_set_src(art, random ? &balloon : &mountain);
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, 0);
+
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
     widget_peripheral_status_init();
