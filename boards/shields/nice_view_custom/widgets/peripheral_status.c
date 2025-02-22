@@ -23,7 +23,15 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include "peripheral_status.h"
 
+LV_IMG_DECLARE(bongo_0);
+LV_IMG_DECLARE(bongo_1);
 LV_IMG_DECLARE(bongo_2);
+
+const lv_img_dsc_t *anim_imgs[] = {
+    &bongo_0,
+    &bongo_1,
+    &bongo_2,
+};
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -116,7 +124,13 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_t *art = lv_img_create(widget->obj);
     //bool random = sys_rand32_get() & 1;
     //lv_img_set_src(art, random ? &balloon : &mountain);
-    lv_img_set_src(art, &bongo_2);
+    //lv_img_set_src(art, &bongo_2);
+    lv_obj_t * art = lv_animimg_create(widget->obj);            
+    lv_obj_center(art);                                         
+    lv_animimg_set_src(art, (const void **) anim_imgs, 12);     
+    lv_animimg_set_duration(art, 1000);                         
+    lv_animimg_set_repeat_count(art, LV_ANIM_REPEAT_INFINITE);  
+    lv_animimg_start(art); 
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, 0);
 
     sys_slist_append(&widgets, &widget->node);
