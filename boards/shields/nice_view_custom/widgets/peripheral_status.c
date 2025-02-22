@@ -28,7 +28,6 @@ LV_IMG_DECLARE(bongo_1);
 LV_IMG_DECLARE(bongo_2);
 
 const lv_img_dsc_t *anim_imgs[] = {
-    &bongo_0,
     &bongo_1,
     &bongo_2,
 };
